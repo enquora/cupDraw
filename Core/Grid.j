@@ -15,46 +15,49 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Grid : Figure 
+@implementation Grid :Figure 
 {
     bool     _showGrid;
     int      _gridSize;
     CPColor  _gridColor;
 } 
 
-+ (Grid) frame: (CGRect) aFrame showGrid: (bool) aShowGrid gridSize: (int) aGridSize
++ (Grid)frame:(CGRect)aFrame showGrid:(bool)aShowGrid gridSize:(int)aGridSize
 {
-	var grid = [[self alloc] initWithFrame: aFrame showGrid: aShowGrid gridSize: aGridSize];
+	var grid = [[self alloc] initWithFrame:aFrame showGrid:aShowGrid gridSize:aGridSize];
 	return grid;
 }
 
-- (id) initWithFrame: (CGRect) aFrame showGrid: (bool) aShowGrid gridSize: (int) aGridSize
+- (id)initWithFrame:(CGRect)aFrame showGrid:(bool)aShowGrid gridSize:(int)aGridSize
 {
-	[super initWithFrame: aFrame];
+	[super initWithFrame:aFrame];
 	_showGrid = aShowGrid;
 	_gridSize = aGridSize;
-	_gridColor = [CPColor colorWithHexString: @"F7F0F3"];
+	_gridColor = [CPColor colorWithHexString:@"F7F0F3"];
 	return self;
 }
 
-- (void) drawRect: (CGRect) rect on: (id)context
+- (void)drawRect:(CGRect)rect on:(id)context
 {
-	CGContextSetFillColor(context, [CPColor colorWithHexString: @"FEFEFE"]);
+	CGContextSetFillColor(context, [CPColor colorWithHexString:@"FEFEFE"]);
 	CGContextFillRect(context, rect);
 	
 	
-	if (_showGrid) {
+	if (_showGrid)
+    {
 		CGContextSetLineWidth(context, 0.25);
-		for (var p = 0; p <= rect.size.width ; p = p + _gridSize) {
-			[self drawGridLineX: p y: 0 x: p y: rect.size.height context: context];
+		for (var p = 0; p <= rect.size.width ; p = p + _gridSize)
+        {
+			[self drawGridLineX:p y:0 x:p y:rect.size.height context:context];
 		} 
-		for (var p = 0; p <= rect.size.height ; p = p + _gridSize) {
-			[self drawGridLineX: 0 y: p x: rect.size.width y: p context: context];
+		for (var p = 0; p <= rect.size.height ; p = p + _gridSize)
+        {
+			[self drawGridLineX:0 y:p x:rect.size.width y:p context:context];
 		} 
 	}
 }
 
-- (void) drawGridLineX: (int) x1 y: (int) y1 x: (int) x2 y: (int) y2 context: context
+- (void)drawGridLineX:(int)x1 y:(int)y1 x:(int)x2 y:(int)y2 context:context
 {
 	CGContextMoveToPoint(context, x1, y1);
 	CGContextAddLineToPoint(context, x2, y2);
