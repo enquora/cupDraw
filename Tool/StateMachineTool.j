@@ -15,51 +15,51 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation StateMachineTool : Tool
+@implementation StateMachineTool :Tool
 {
 	ToolState _state;
 }
 
-- (id) init
+- (id)init
 { 
 	[super init];
-	[self setState: [self initialState]];
+	[self setState:[self initialState]];
 	return self;
 }
 
-- (id) initialState
+- (id)initialState
 {
 	return nil;
 }
 
-- (void) setState: (ToolState) aNewState
+- (void)setState:(ToolState)aNewState
 {
 	_state = aNewState;
 	//CPLog.debug(aNewState);
 }
 
-- (void) mouseDown:(CPEvent) anEvent	 
+- (void)mouseDown:(CPEvent)anEvent	 
 {
-	[_state mouseDown: anEvent];
+	[_state mouseDown:anEvent];
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (void)mouseDragged:(CPEvent)anEvent
 {
-	[_state mouseDragged: anEvent];
+	[_state mouseDragged:anEvent];
 }
 
-- (void) mouseUp:(CPEvent) anEvent
+- (void)mouseUp:(CPEvent)anEvent
 {
-	[_state mouseUp: anEvent];
+	[_state mouseUp:anEvent];
 }
 
-- (void) keyUp: (CPEvent) anEvent
+- (void)keyUp:(CPEvent)anEvent
 {
-	[_state keyUp: anEvent];
+	[_state keyUp:anEvent];
 }
 
-- (void) keyDown: (CPEvent) anEvent
+- (void)keyDown:(CPEvent)anEvent
 {
-	[_state keyDown: anEvent];
+	[_state keyDown:anEvent];
 }
 @end

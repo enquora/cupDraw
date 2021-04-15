@@ -19,22 +19,24 @@
 {
 }
 
-- (void) undo
+- (void)undo
 {
 }
 
-- (void) execute
+- (void)execute
 {
 	var tool = [_drawing tool];
 	var selectedFigures = [tool selectedFigures];
 	
-	if ([selectedFigures count] == 1) {
+	if ([selectedFigures count] == 1)
+    {
 		var figure = [selectedFigures objectAtIndex: 0];
 		//check groupfigure class
 		var ungroupedFigures = [figure figures];
 		[tool unselect: figure];
 		[figure ungroup];
-		for (var i = 0; i < [ungroupedFigures count]; i++) { 
+		for (var i = 0; i < [ungroupedFigures count]; i++)
+        { 
 		    var ungroupedFigure = [ungroupedFigures objectAtIndex: i];
 			[tool select: ungroupedFigure];
 		}

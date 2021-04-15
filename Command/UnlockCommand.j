@@ -19,17 +19,19 @@
 {
 }
 
-- (void) undo
+- (void)undo
 {
 }
 
-- (void) execute
+- (void)execute
 {
 	var tool = [_drawing tool];
 	var selectedFigures = [tool selectedFigures];
 	
-	if ([selectedFigures count] >= 1) {
-		for (var i = 0; i < [selectedFigures count]; i++) { 
+	if ([selectedFigures count] >= 1)
+    {
+		for (var i = 0; i < [selectedFigures count]; i++)
+        { 
 		    var figure = [selectedFigures objectAtIndex: i];
 			[figure moveable: YES];
 			[figure editable: YES];

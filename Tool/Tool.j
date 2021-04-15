@@ -15,58 +15,58 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool : CPObject
+@implementation Tool :CPObject
 {
 	Drawing _drawing;
 }
 
-+ (id) drawing: (Drawing) aDrawing
++ (id)drawing:(Drawing)aDrawing
 {
-	return [[self new] initWithDrawing: aDrawing];
+	return [[self new] initWithDrawing:aDrawing];
 }
 
-- (id) initWithDrawing: (Drawing) aDrawing 
+- (id)initWithDrawing:(Drawing)aDrawing 
 { 
 	_drawing = aDrawing;
 	return self;
 }
 
-- (Drawing) drawing	 
+- (Drawing)drawing	 
 {
 	return _drawing;
 }
 
-- (void) activateSelectionTool
+- (void)activateSelectionTool
 {
-	var tool = [SelectionTool drawing: _drawing];
-	[_drawing tool: tool];
+	var tool = [SelectionTool drawing:_drawing];
+	[_drawing tool:tool];
 }
 
-- (void) activate
-{
-}
-
-- (void) release
+- (void)activate
 {
 }
 
-- (void) mouseDown:(CPEvent) anEvent	 
+- (void)release
 {
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (void)mouseDown:(CPEvent)anEvent	 
 {
 }
 
-- (void) mouseUp:(CPEvent) anEvent
+- (void)mouseDragged:(CPEvent)anEvent
 {
 }
 
-- (void) keyUp: (CPEvent) anEvent
+- (void)mouseUp:(CPEvent)anEvent
 {
 }
 
-- (void) keyDown: (CPEvent) anEvent
+- (void)keyUp:(CPEvent)anEvent
+{
+}
+
+- (void)keyDown:(CPEvent)anEvent
 {
 }
 @end

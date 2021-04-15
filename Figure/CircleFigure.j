@@ -15,43 +15,43 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CircleFigure : Figure 
+@implementation CircleFigure :Figure 
 { 
 } 
 
-+ (CircleFigure) newAt: (CGPoint) aPoint
++ (CircleFigure)newAt:(CGPoint)aPoint
 {
 	var frame = CGRectMake(aPoint.x, aPoint.y, 50, 50);
-	var widget = [[self new] initWithFrame: frame];
+	var widget = [[self new] initWithFrame:frame];
 	return widget;
 }
 
-+ (CircleFigure) newWith: (id) aFrame
++ (CircleFigure)newWith:(id)aFrame
 {
-	var widget = [[self new] initWithFrame: aFrame];
+	var widget = [[self new] initWithFrame:aFrame];
 	return widget;
 }
 
-- (id) initWithFrame: (CGRect) aFrame
+- (id)initWithFrame:(CGRect)aFrame
 { 
-	self = [super initWithFrame: aFrame];
-	if (self) {
-		[handles addObject: [Handle target: self selector: @"topLeft"]];
-		[handles addObject: [Handle target: self selector: @"topMiddle"]];
-		[handles addObject: [Handle target: self selector: @"topRight"]];
+	self = [super initWithFrame:aFrame];
+	if (self){
+		[handles addObject:[Handle target:self selector:@"topLeft"]];
+		[handles addObject:[Handle target:self selector:@"topMiddle"]];
+		[handles addObject:[Handle target:self selector:@"topRight"]];
 
-		[handles addObject: [Handle target: self selector: @"middleLeft"]];
-		[handles addObject: [Handle target: self selector: @"middleRight"]];
+		[handles addObject:[Handle target:self selector:@"middleLeft"]];
+		[handles addObject:[Handle target:self selector:@"middleRight"]];
 
-		[handles addObject: [Handle target: self selector: @"bottomLeft"]];
-		[handles addObject: [Handle target: self selector: @"bottomMiddle"]];
-		[handles addObject: [Handle target: self selector: @"bottomRight"]];
+		[handles addObject:[Handle target:self selector:@"bottomLeft"]];
+		[handles addObject:[Handle target:self selector:@"bottomMiddle"]];
+		[handles addObject:[Handle target:self selector:@"bottomRight"]];
 
 		return self;
 	}
 }
 
-- (void) drawRect:(CGRect)rect on: (id)context
+- (void)drawRect:(CGRect)rect on:(id)context
 {
         CGContextSetFillColor(context, [self backgroundColor]); 
         CGContextFillEllipseInRect(context, [self bounds]); 

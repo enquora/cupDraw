@@ -17,10 +17,10 @@
  */
 @implementation EditorDelegate : CPObject
 {
-	CPTextField _editableLabel;
-	Figure _editableFigure;
-	Drawing _drawing;
-	id _window;
+    CPTextField  _editableLabel;
+    Figure       _editableFigure;
+    Drawing      _drawing;
+    id           _window;
 }
 
 - (id) initWithWidget: (Figure) aFigure label: (CPTextField) aLabel window: (id) aWindow figureContainer: (Figure) aContainer drawing: (Drawing) aDrawing

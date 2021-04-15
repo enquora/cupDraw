@@ -15,75 +15,77 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Connection : Polyline 
+@implementation Connection :Polyline 
 { 
-	Figure _sourceFigure;
-	Figure _targetFigure;
-	HandleMagnet _magnet1;
-	HandleMagnet _magnet2;
-	
-	CPPoint _p1Arrow;
-	CPPoint _p2Arrow;
+    Figure        _sourceFigure;
+    Figure        _targetFigure;
+    HandleMagnet  _magnet1;
+    HandleMagnet  _magnet2;
+    CPPoint       _p1Arrow;
+    CPPoint       _p2Arrow;
 } 
 
-+ (Connection) connect: (Figure) aTargetFigure with: (Figure) aSourceFigure
++ (Connection)connect:(Figure)aTargetFigure with:(Figure)aSourceFigure
 {
-	return [self source: aSourceFigure target: aTargetFigure];
+	return [self source:aSourceFigure target:aTargetFigure];
 }
 
-+ (Connection) source: (Figure) aSourceFigure target: (Figure) aTargetFigure
++ (Connection)source:(Figure)aSourceFigure target:(Figure)aTargetFigure
 {
-	return [self source: aSourceFigure target: aTargetFigure points: nil];
+	return [self source:aSourceFigure target:aTargetFigure points:nil];
 }
 
-+ (Connection) source: (Figure) aSourceFigure target: (Figure) aTargetFigure points: (id) anArrayOfPoints
++ (Connection)source:(Figure)aSourceFigure target:(Figure)aTargetFigure points:(id)anArrayOfPoints
 {
-	return [[self new] initWithSource: aSourceFigure target: aTargetFigure points: anArrayOfPoints];
+	return [[self new] initWithSource:aSourceFigure target:aTargetFigure points:anArrayOfPoints];
 }
 
-- (id) initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure points: (id) anArrayOfPoints
+- (id)initWithSource:(Figure)aSourceFigure target:(Figure)aTargetFigure points:(id)anArrayOfPoints
 { 
 	_sourceFigure = aSourceFigure;
 	_targetFigure = aTargetFigure;
 
 	var points = [CPMutableArray array];
 	
-	if (anArrayOfPoints == nil) {
-		[points addObject: [_sourceFigure center]];
-		if (_sourceFigure == _targetFigure) {
+	if (anArrayOfPoints == nil){
+		[points addObject:[_sourceFigure center]];
+		if (_sourceFigure == _targetFigure)
+        {
 			var center = [_sourceFigure center];
-			[points addObject: CGPointMake(center.x + 100, center.y)];
-			[points addObject: CGPointMake(center.x + 100, center.y - 100)];
-			[points addObject: CGPointMake(center.x      , center.y - 100)];
+			[points addObject:CGPointMake(center.x + 100, center.y)];
+			[points addObject:CGPointMake(center.x + 100, center.y - 100)];
+			[points addObject:CGPointMake(center.x      , center.y - 100)];
 		}
-		[points addObject: [_targetFigure center]];
-	} else {
+		[points addObject:[_targetFigure center]];
+	}
+    else
+    {
 		CPLog.debug("[Connection] Points " + anArrayOfPoints);
 		[points addObjectsFromArray: anArrayOfPoints];
 	}
 	
-	self = [super initWithPoints: points];
+	self = [super initWithPoints:points];
 	
-	if (self) {
+	if (self){
 		[self recomputeFrame];
 		
-		_magnet1 = [[HandleMagnet alloc] initWithHandle: [self handleAt: (([points count] - 1) * 2)] source: _sourceFigure target: _targetFigure];
-		_magnet2 = [[HandleMagnet alloc] initWithHandle: [self handleAt: 0] source: _targetFigure target: _sourceFigure];
+		_magnet1 = [[HandleMagnet alloc] initWithHandle:[self handleAt:(([points count] - 1)* 2)] source:_sourceFigure target:_targetFigure];
+		_magnet2 = [[HandleMagnet alloc] initWithHandle:[self handleAt:0] source:_targetFigure target:_sourceFigure];
 
-		[_magnet1 updateHandleLocation: nil];
-		[_magnet2 updateHandleLocation: nil];
+		[_magnet1 updateHandleLocation:nil];
+		[_magnet2 updateHandleLocation:nil];
 
-		[_sourceFigure addOutConnection: self];
-		[_targetFigure addInConnection: self];
+		[_sourceFigure addOutConnection:self];
+		[_targetFigure addInConnection:self];
 		return self;
 	}
 }
 
-- (void) drawRect:(CGRect) rect on: (id) context
+- (void)drawRect:(CGRect)rect on:(id)context
 {
-	[super drawRect: rect on: context];
+	[super drawRect:rect on:context];
 	
-	var point = [_points objectAtIndex: ([_points count] - 1)];
+	var point = [_points objectAtIndex:([_points count] - 1)];
 	
 	var origin = [self frameOrigin];
 	
@@ -96,10 +98,10 @@
 	CGContextFillPath(context);
 }
 
-- (void) computeArrowPoints
+- (void)computeArrowPoints
 {
-	var antPoint = [_points objectAtIndex: ([_points count] - 2)];
-	var point = [_points objectAtIndex: ([_points count] - 1)];
+	var antPoint = [_points objectAtIndex:([_points count] - 2)];
+	var point = [_points objectAtIndex:([_points count] - 1)];
 	
 	var p1 = nil;
 	var p2 = nil;
@@ -107,34 +109,46 @@
 	var xDiff = 5;
 	var yDiff = 7;
 	
-	if (antPoint.x == point.x) {
+	if (antPoint.x == point.x)
+    {
 		//vertical
-		if (antPoint.y < point.y) {
+		if (antPoint.y < point.y)
+        {
 			p1 = CPPointMake(point.x - xDiff, point.y - yDiff);
 			p2 = CPPointMake(point.x + xDiff, point.y - yDiff);
-		} else {
+		}
+        else
+        {
 			p1 = CPPointMake(point.x - xDiff, point.y + yDiff);
 			p2 = CPPointMake(point.x + xDiff, point.y + yDiff);
 		}
-	} else {
-		if (antPoint.y == point.y) {
+	}
+    else
+    {
+		if (antPoint.y == point.y)
+        {
 			//horizontal
-			if (antPoint.x < point.x) {
+			if (antPoint.x < point.x)
+            {
 				p1 = CPPointMake(point.x - yDiff, point.y - xDiff);
 				p2 = CPPointMake(point.x - yDiff, point.y + xDiff);
-			} else {
+			}
+            else
+            {
 				p1 = CPPointMake(point.x + yDiff, point.y - xDiff);
 				p2 = CPPointMake(point.x + yDiff, point.y + xDiff);
 			}
-		} else {
+		}
+        else
+        {
 			var lineVector = CPPointMake(point.x - antPoint.x, point.y - antPoint.y);
-			var lineLength = SQRT((lineVector.x * lineVector.x) + (lineVector.y * lineVector.y));
+			var lineLength = SQRT((lineVector.x * lineVector.x)+ (lineVector.y * lineVector.y));
 			
 			var pi = 3.14159265;
 			var nWidth = 10;
 			var fTheta = pi / 8;
 			
-			var tPointOnLine = nWidth / (2 * (TAN(fTheta) / 2) * lineLength);
+			var tPointOnLine = nWidth / (2 * (TAN(fTheta)/ 2)* lineLength);
 			tPointOnLine = tPointOnLine / 3;
 			var pointOnLine = CPPointMake(point.x + -tPointOnLine * lineVector.x, point.y + -tPointOnLine * lineVector.y);
 
@@ -152,22 +166,22 @@
 	_p2Arrow = p2;
 }
 
-- (void) recomputeFrame
+- (void)recomputeFrame
 {
 	[self computeArrowPoints];
-	var pointsWithArrow = [CPMutableArray arrayWithArray: _points];
-	[pointsWithArrow addObject: _p1Arrow];
-	[pointsWithArrow addObject: _p2Arrow];
-	var newFrame = [GeometryUtils computeFrameFor: pointsWithArrow];
-	[self setFrame: newFrame];
+	var pointsWithArrow = [CPMutableArray arrayWithArray:_points];
+	[pointsWithArrow addObject:_p1Arrow];
+	[pointsWithArrow addObject:_p2Arrow];
+	var newFrame = [GeometryUtils computeFrameFor:pointsWithArrow];
+	[self setFrame:newFrame];
 }
 
-- (Figure) source
+- (Figure)source
 {
     return _sourceFigure;
 }
 
-- (Figure) target
+- (Figure)target
 {
     return _targetFigure;
 }

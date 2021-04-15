@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation ToolboxFigure : Figure 
+@implementation ToolboxFigure :Figure 
 {
 	Drawing _drawing;
 	CPDictionary _buttonsMapping;
@@ -24,17 +24,18 @@
 	int _currentY;
 }
 
-+ (ToolboxFigure) initializeWith: (Drawing) aDrawing at: (CPPoint) aPoint
++ (ToolboxFigure)initializeWith:(Drawing)aDrawing at:(CPPoint)aPoint
 {
-	var figure = [[self new] initializeWith: aDrawing at: aPoint];
+	var figure = [[self new] initializeWith:aDrawing at:aPoint];
 	return figure;
 }
 
-- (id) initializeWith: (Drawing) aDrawing at: (CPPoint) aPoint
+- (id)initializeWith:(Drawing)aDrawing at:(CPPoint)aPoint
 {
 	var frame = CGRectMake(aPoint.x, aPoint.y, 50, 1);
-	self = [super initWithFrame: frame];
-	if (self) {
+	self = [super initWithFrame:frame];
+	if (self)
+    {
 		_drawing = aDrawing;
 		_currentColumn = 1;
 		_maxColumn = 2;
@@ -46,98 +47,100 @@
 	}
 }
 
-- (void) columns: (int) columns
+- (void)columns:(int)columns
 {
 	_maxColumn = columns;
 }
 
-- (void) addSeparator
+- (void)addSeparator
 {
 	_currentY = _currentY + 25;
 	_currentColumn = 1;
 }
 
-- (void) addTool: (Tool) aTool withTitle: (id) aTitle image: (id) url
+- (void)addTool:(Tool)aTool withTitle:(id)aTitle image:(id)url
 {
 	var button = [self 
-		addButtonWithTitle: aTitle 
-		image: url
-		action: @selector(selectTool:)];
-	[_buttonsMapping setObject: aTool forKey: button];
+		addButtonWithTitle:aTitle 
+		image:url
+		action:@selector(selectTool:)];
+	[_buttonsMapping setObject:aTool forKey:button];
 }
 
-- (void) selectTool: (CPButton) aButton
+- (void)selectTool:(CPButton)aButton
 {
-	var tool = [_buttonsMapping objectForKey: aButton];
-	[_drawing tool: tool];
+	var tool = [_buttonsMapping objectForKey:aButton];
+	[_drawing tool:tool];
 }
 
-- (void) addCommand: (Command) aCommand withTitle: (id) aTitle image: (id) url
+- (void)addCommand:(Command)aCommand withTitle:(id)aTitle image:(id)url
 {
 	var button = [self 
-		addButtonWithTitle: aTitle 
-		image: url 
-		action: @selector(selectCommand:)];
-	[_buttonsMapping setObject: aCommand forKey: button];
+		addButtonWithTitle:aTitle 
+		image:url 
+		action:@selector(selectCommand:)];
+	[_buttonsMapping setObject:aCommand forKey:button];
 }
 
-- (void) selectCommand: (CPButton) aButton
+- (void)selectCommand:(CPButton)aButton
 {
-	var commandClass = [_buttonsMapping objectForKey: aButton];
-	var command = [commandClass drawing: _drawing];
+	var commandClass = [_buttonsMapping objectForKey:aButton];
+	var command = [commandClass drawing:_drawing];
 	[command execute];
 }
 
-- (CPButton) addButtonWithTitle: (id) aTitle image: (id) url action: (SEL) aSelector
+- (CPButton)addButtonWithTitle:(id)aTitle image:(id)url action:(SEL)aSelector
 {
 	var buttonWidth = 30;
 	var buttonHeight = 25;
-	var button = [CPButton buttonWithTitle: @""];
+	var button = [CPButton buttonWithTitle:@""];
 
 	var y = _currentY;
-	var x = (_currentColumn - 1) * buttonWidth;
+	var x = (_currentColumn - 1)* buttonWidth;
 	var origin = CGPointMake(x, y);
-	[button setFrameOrigin: origin];
+	[button setFrameOrigin:origin];
 
 	var icon = [[CPImage alloc]
-	            initWithContentsOfFile: url];
-	[button setImage: icon];
-	[button setBordered: YES];
-	[button setBezelStyle: CPRegularSquareBezelStyle];
-	[button setFrameSize: CGSizeMake(buttonWidth, buttonHeight)];
-	[button setTarget: self];
-	[button setAction: aSelector];
-	[button setAlternateTitle: aTitle];
+	            initWithContentsOfFile:url];
+	[button setImage:icon];
+	[button setBordered:YES];
+	[button setBezelStyle:CPRegularSquareBezelStyle];
+	[button setFrameSize:CGSizeMake(buttonWidth, buttonHeight)];
+	[button setTarget:self];
+	[button setAction:aSelector];
+	[button setAlternateTitle:aTitle];
 
-	[self addSubview: button];
+	[self addSubview:button];
 
 	var newSize = CGSizeMake(buttonWidth * _maxColumn, _currentY + buttonHeight);
-	[self setFrameSize: newSize];
+	[self setFrameSize:newSize];
 
-	if (_currentColumn == _maxColumn) {
+	if (_currentColumn == _maxColumn)
+    {
 		_currentY = _currentY + buttonHeight;
 	}
 	
 	_currentColumn = _currentColumn + 1;
-	if (_currentColumn > _maxColumn) {
+	if (_currentColumn > _maxColumn)
+    {
 		_currentColumn = 1;
 	}
 	return button;
 }
 
-- (void) drawRect:(CGRect)rect on: (id)context
+- (void)drawRect:(CGRect)rect on:(id)context
 {
     CGContextSetFillColor(context, [CPColor lightGrayColor]); 
     CGContextFillRect(context, [self bounds]); 
 }
 
-- (void) sizeToFit
+- (void)sizeToFit
 {
 	var currentTopLeft = [self topLeft];
-	var frame = [GeometryUtils computeFrameForViews: [self subviews]];
+	var frame = [GeometryUtils computeFrameForViews:[self subviews]];
 	frame.origin.y = currentTopLeft.y + frame.origin.y - 15;
 	frame.origin.x = currentTopLeft.x;
 	frame.size.height = frame.size.height + 15;
-	[self setFrame: frame];
+	[self setFrame:frame];
 }
 @end

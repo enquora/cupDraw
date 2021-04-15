@@ -19,7 +19,7 @@
 {
 }
 
-- (id) init
+- (id)init
 {
 	[super init];
 	

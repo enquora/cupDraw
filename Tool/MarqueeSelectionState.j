@@ -21,14 +21,14 @@
 	RectangleFigure _rectangleFigure;
 }
 
-+ (id) tool: (StateMachineTool) aTool initialDragPoint: (CPPoint) anInitialDragPoint
++ (id)tool:(StateMachineTool)aTool initialDragPoint:(CPPoint)anInitialDragPoint
 {
 	var state = [self tool: aTool];
 	[state initWithInitialDragPoint: anInitialDragPoint];
 	return state;
 }
 
-- (id) initWithInitialDragPoint: (CPPoint) anInitialDragPoint
+- (id)initWithInitialDragPoint:(CPPoint)anInitialDragPoint
 {
 	_initialDragPoint = anInitialDragPoint;
 	_rectangleFigure = [RectangleFigure newAt: _initialDragPoint];
@@ -39,33 +39,37 @@
 	return self;
 }
 
-- (void) mouseDragged: (CPEvent) anEvent
+- (void)mouseDragged:(CPEvent)anEvent
 {
 	var frame = [self computeFrame: anEvent];
 	[_rectangleFigure setFrame: frame];
 }
 
-- (void) mouseUp: (CPEvent) anEvent
+- (void)mouseUp:(CPEvent)anEvent
 {
 	var frame = [self computeFrame: anEvent];
 	[_rectangleFigure removeFromSuperview];
 	
 	var figures = [[_tool drawing] figuresIn: frame];
 	
-	if ([figures count] > 0) {
-		for (var i = 0; i < [figures count]; i++) { 
+	if ([figures count] > 0)
+    {
+		for (var i = 0; i < [figures count]; i++)
+        { 
 			var selectedFigure = [figures objectAtIndex: i];
 			[_tool select: selectedFigure];
 		}
 		[self transitionTo: [SelectedState tool: _tool initialDragPoint: nil]];
-	} else {
+	}
+    else
+    {
 		[_tool clearSelection];
 		[self transitionToInitialState];
 		[_tool select: [_tool drawing]];
 	}
 }
 
-- (id) computeFrame: (CPEvent) anEvent
+- (id)computeFrame:(CPEvent)anEvent
 {
 	var point = [anEvent locationInWindow];
 	var x = MIN(_initialDragPoint.x, point.x);

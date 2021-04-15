@@ -15,20 +15,21 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation GeometryUtils : CPObject
+@implementation GeometryUtils :CPObject
 {
 }
 
-+ (CGRect) computeFrameFor: (CPArray) points
++ (CGRect)computeFrameFor:(CPArray)points
 {
-	var firstPoint = [points objectAtIndex: 0];
+	var firstPoint = [points objectAtIndex:0];
 
 	var minX = firstPoint.x;
 	var maxX = minX;
 	var minY = firstPoint.y;
 	var maxY = minY;
 	
-	for (var i = 1; i < [points count]; i++) { 
+	for (var i = 1; i < [points count]; i++)
+    { 
 	    var point = [points objectAtIndex:i];
 	
 		minX = MIN(minX, point.x);
@@ -46,24 +47,25 @@
 	return CGRectMake(minX, minY, width, height);
 }
 
-+ (CGRect) computeFrameForViews: (CPArray) views
++ (CGRect)computeFrameForViews:(CPArray)views
 {
-	var firstPoint = [[views objectAtIndex: 0] frame].origin;
+	var firstPoint = [[views objectAtIndex:0] frame].origin;
 
 	var minX = firstPoint.x;
 	var maxX = minX;
 	var minY = firstPoint.y;
 	var maxY = minY;
 	
-	for (var i = 1; i < [views count]; i++) { 
-	    var point = [[views objectAtIndex: i] frame].origin;
+	for (var i = 1; i < [views count]; i++)
+    { 
+	    var point = [[views objectAtIndex:i] frame].origin;
 	
 		minX = MIN(minX, point.x);
 		maxX = MAX(maxX, point.x);
 		minY = MIN(minY, point.y);
 		maxY = MAX(maxY, point.y);
 
-		var size = [[views objectAtIndex: i] frame].size;
+		var size = [[views objectAtIndex:i] frame].size;
 	    var point2 = CGPointMake(point.x + size.width, point.y + size.height);
 	
 		minX = MIN(minX, point2.x);
@@ -81,7 +83,7 @@
 	return CGRectMake(minX, minY, width, height);
 }
 
-+ (CGPoint) intersectionOf: (CGPoint) p1 with: (CGPoint) p2 with: (CGPoint) p3 with: (CGPoint) p4
++ (CGPoint)intersectionOf:(CGPoint)p1 with:(CGPoint)p2 with:(CGPoint)p3 with:(CGPoint)p4
 {
 	var Ax = p1.x;
 	var Ay = p1.y;
@@ -108,19 +110,19 @@
 
 	//  Fail if the segments share an end-point.
 	if (Ax==Cx && Ay==Cy || Bx==Cx && By==Cy
-	  ||  Ax==Dx && Ay==Dy || Bx==Dx && By==Dy) {
+	  ||  Ax==Dx && Ay==Dy || Bx==Dx && By==Dy){
 	    return nil; 
 	}
 
-	//  (1) Translate the system so that point A is on the origin.
+	//  (1)Translate the system so that point A is on the origin.
 	Bx-=Ax; By-=Ay;
 	Cx-=Ax; Cy-=Ay;
 	Dx-=Ax; Dy-=Ay;
 
 	//  Discover the length of segment A-B.
-	distAB= [CPPredicateUtilities sqrt: (Bx*Bx+By*By)];
+	distAB= [CPPredicateUtilities sqrt:(Bx*Bx+By*By)];
 
-	//  (2) Rotate the system so that point B is on the positive X axis.
+	//  (2)Rotate the system so that point B is on the positive X axis.
 	theCos=Bx/distAB;
 	theSin=By/distAB;
 	newX=Cx*theCos+Cy*theSin;
@@ -129,34 +131,35 @@
 	Dy  =Dy*theCos-Dx*theSin; Dx=newX;
 
 	//  Fail if segment C-D doesn't cross line A-B.
-	if (Cy<0. && Dy<0. || Cy>=0. && Dy>=0.) return nil;
+	if (Cy<0. && Dy<0. || Cy>=0. && Dy>=0.)return nil;
 
-	//  (3) Discover the position of the intersection point along line A-B.
+	//  (3)Discover the position of the intersection point along line A-B.
 	ABpos=Dx+(Cx-Dx)*Dy/(Dy-Cy);
 
 	//  Fail if segment C-D crosses line A-B outside of segment A-B.
-	if (ABpos<0. || ABpos>distAB) return nil;
+	if (ABpos<0. || ABpos>distAB)return nil;
 
 	var point = CGPointMake(ROUND(Ax+ABpos*theCos), ROUND(Ay+ABpos*theSin));
 	return point;
 }
 
-+ (id) distanceFrom: (CGPoint) p1 to: (CGPoint) p2
++ (id)distanceFrom:(CGPoint)p1 to:(CGPoint)p2
 {
 	var xOff = (p1.x - p2.x);
 	var yOff = (p1.y - p2.y);
-	return [CPPredicateUtilities sqrt: (xOff * xOff + yOff * yOff)]
+	return [CPPredicateUtilities sqrt:(xOff * xOff + yOff * yOff)]
 }
 
-+ (id) distanceFrom: (CGPoint) a and: (CGPoint) b to: (CGPoint) p
++ (id)distanceFrom:(CGPoint)a and:(CGPoint)b to:(CGPoint)p
 {
 	// if start==end, then use pt distance
-	if (a == b) {
-		return [self distanceFrom: a to: p];
+	if (a == b)
+    {
+		return [self distanceFrom:a to:p];
 	}
 
 	    // otherwise use comp.graphics.algorithms Frequently asked Questions method
-	    /*(1)     	      aC dot ab
+	    /*(1)    	      aC dot ab
 	                   r = ---------
 	                         ||ab||^2
 			r has the following meaning:
@@ -167,13 +170,15 @@
 			0<r<1 P is interior to ab
 		*/
 
-	var r = ( (p.x - a.x) * (b.x - a.x) + (p.y - a.y) * (b.y - a.y) ) / ( (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y) );
-	if (r <= 0.0) {
-		return [self distanceFrom: a to: p];
+	var r = ( (p.x - a.x)* (b.x - a.x)+ (p.y - a.y)* (b.y - a.y))/ ( (b.x - a.x)* (b.x - a.x)+ (b.y - a.y)* (b.y - a.y));
+	if (r <= 0.0)
+    {
+		return [self distanceFrom:a to:p];
 	}
 	
-	if (r >= 1.0) {
-		return [self distanceFrom: b to: p];
+	if (r >= 1.0)
+    {
+		return [self distanceFrom:b to:p];
 	}
 
 
@@ -185,8 +190,9 @@
 			Then the distance from C to P = |s|*L.
 		*/
 
-	var s = ((a.y - p.y) *(b.x - a.x) - (a.x - p.x)*(b.y - a.y) ) / ((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y) );
+	var s = ((a.y - p.y)*(b.x - a.x)- (a.x - p.x)*(b.y - a.y))/ ((b.x - a.x)* (b.x - a.x)+ (b.y - a.y)* (b.y - a.y));
 
-	return ABS(s) * SQRT(((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y)));
+	return ABS(s)* SQRT(((b.x - a.x)* (b.x - a.x)+ (b.y - a.y)* (b.y - a.y)));
 }
+
 @end

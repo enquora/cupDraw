@@ -19,7 +19,7 @@
 {
 }
 
-- (id) initWithFrame: (CGRect) aFrame textField: (id) aTextField
+- (id)initWithFrame:(CGRect)aFrame textField:(id)aTextField
 { 
 	[super initWithFrame: aFrame textField: aTextField];
 	[_textField setTextColor: [CPColor blueColor]];
@@ -27,7 +27,7 @@
 	return self;
 }
 
-- (void) mouseUp: (CPEvent) anEvent
+- (void)mouseUp:(CPEvent)anEvent
 {
 	var url = [_textField objectValue];
 	window.open(url, '_blank');

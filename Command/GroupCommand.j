@@ -19,21 +19,23 @@
 {
 }
 
-- (void) undo
+- (void)undo
 {
 }
 
-- (void) execute
+- (void)execute
 {
 	var tool = [_drawing tool];
 	var selectedFigures = [tool selectedFigures];
 	
-	if ([selectedFigures count] >= 2) {
+	if ([selectedFigures count] >= 2)
+    {
 		var frame = [GeometryUtils computeFrameForViews: selectedFigures];
 		var figuresTranslation = CGPointMake(-frame.origin.x, -frame.origin.y);
 		var group = [GroupFigure frame: frame];
 		
-		for (var i = 0; i < [selectedFigures count]; i++) { 
+		for (var i = 0; i < [selectedFigures count]; i++)
+        { 
 		    var figure = [selectedFigures objectAtIndex: i];
 			[group addFigure: figure];
 			[figure translateBy: figuresTranslation];

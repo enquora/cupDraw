@@ -19,20 +19,20 @@
 { 
 } 
 
-+ (RectangleFigure) newAt: (CGPoint) aPoint
++ (RectangleFigure)newAt:(CGPoint)aPoint
 {
 	var frame = CGRectMake(aPoint.x, aPoint.y, 50, 50);
 	var widget = [[self new] initWithFrame: frame];
 	return widget;
 }
 
-+ (RectangleFigure) newWith: (id) aFrame
++ (RectangleFigure)newWith:(id)aFrame
 {
 	var widget = [[self new] initWithFrame: aFrame];
 	return widget;
 }
 
-- (id) initWithFrame: (CGRect) aFrame
+- (id)initWithFrame:(CGRect)aFrame
 { 
 	[super initWithFrame: aFrame];
 	
@@ -53,7 +53,7 @@
 	return self;
 }
 
-- (void) drawRect:(CGRect)rect on: (id)context
+- (void)drawRect:(CGRect)rect on:(id)context
 {
         CGContextSetFillColor(context, [self backgroundColor]); 
         CGContextFillRect(context, [self bounds]); 

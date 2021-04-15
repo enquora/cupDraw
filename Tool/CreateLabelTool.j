@@ -21,7 +21,7 @@
 	CPPoint _point;	
 }
 
-- (void) createFigureAt: (id) aPoint on: (id) aDrawing
+- (void)createFigureAt:(id)aPoint on:(id)aDrawing
 {
 	_editableLabel = [CPCancelableTextField 
 		textFieldWithStringValue: @""
@@ -45,9 +45,10 @@
 	[[aDrawing window] makeFirstResponder: _editableLabel];
 }
 
-- (void) cancelEditing
+- (void)cancelEditing
 {
-	if (_editableLabel != nil) {
+	if (_editableLabel != nil)
+    {
 		[[CPNotificationCenter defaultCenter] 
 			removeObserver:self
 			name: CPControlTextDidEndEditingNotification 
@@ -59,7 +60,7 @@
 	}
 }
 
-- (void) controlTextDidEndEditing: (CPNotification) notification
+- (void)controlTextDidEndEditing:(CPNotification)notification
 {
 	var text = [_editableLabel objectValue];
 	var image = [LabelFigure initializeWithText: text at: _point];

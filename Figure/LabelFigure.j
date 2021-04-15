@@ -15,83 +15,87 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation LabelFigure : Figure 
+@implementation LabelFigure :Figure 
 {
-	CPTextField _textField;
+    CPTextField  _textField;
 }
 
-+ (LabelFigure) initializeWithText: (id) text at: (CPPoint) aPoint
++ (LabelFigure)initializeWithText:(id)text at:(CPPoint)aPoint
 {
 	var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-	[label setStringValue: text];
-	[label setTextColor: [CPColor blackColor]];
-	[label setFrameOrigin: CGPointMake(0, 0)];
+	[label setStringValue:text];
+	[label setTextColor:[CPColor blackColor]];
+	[label setFrameOrigin:CGPointMake(0, 0)];
 	[label sizeToFit];
-	[label setBordered: NO];
-	[label setBezeled: NO];
-	return [self initializeWithTextField: label at: aPoint];
+	[label setBordered:NO];
+	[label setBezeled:NO];
+	return [self initializeWithTextField:label at:aPoint];
 }
 
-+ (LabelFigure) initializeWithTextField: (CPTextField) textField at: (CPPoint) aPoint
++ (LabelFigure)initializeWithTextField:(CPTextField)textField at:(CPPoint)aPoint
 {
 	var textFrameSize = [textField frameSize];
 	var frame = CGRectMake(aPoint.x, aPoint.y, textFrameSize.width, textFrameSize.height);
-	var label = [[self alloc] initWithFrame: frame textField: textField];
+	var label = [[self alloc] initWithFrame:frame textField:textField];
 	return label;
 }
 
-- (id) initWithFrame: (CGRect) aFrame textField: (id) aTextField
+- (id)initWithFrame:(CGRect)aFrame textField:(id)aTextField
 { 
-	[super initWithFrame: aFrame];
+	[super initWithFrame:aFrame];
 	_textField = aTextField;
 	_backgroundColor = [CPColor whiteColor];
 	_foregroundColor = [CPColor blackColor];
-	[self addSubview: _textField];
+	[self addSubview:_textField];
 	return self;
 }
 
-- (void) figureAt: (CPPoint) aPoint
+- (void)figureAt:(CPPoint)aPoint
 {
 	var frame = [self frame];
-	if (CPRectContainsPoint(frame, aPoint)) {
+	if (CPRectContainsPoint(frame, aPoint))
+    {
 		return self;
-	} else {
+	}
+    else
+    {
 		return nil;
 	}
 }
 
-- (void) setText: (id) aText
+- (void)setText:(id)aText
 {
-	[_textField setStringValue: aText];
+	[_textField setStringValue:aText];
 	[_textField sizeToFit];
-	[self setFrameSize: [_textField frameSize]];
+	[self setFrameSize:[_textField frameSize]];
 }
 
-- (void) backgroundColor: (CPColor) aColor
+- (void)backgroundColor:(CPColor)aColor
 {
-	[super backgroundColor: aColor];
+	[super backgroundColor:aColor];
 	[self invalidate];
 }
 
-- (void) foregroundColor: (CPColor) aColor
+- (void)foregroundColor:(CPColor)aColor
 {
-	[super foregroundColor: aColor];
+	[super foregroundColor:aColor];
 	[_textField setTextColor: aColor];
 }
 
-- (void) drawRect:(CGRect)rect on: (id)context
+- (void)drawRect:(CGRect)rect on:(id)context
 {
 	CGContextSetFillColor(context, [self backgroundColor]); 
 	CGContextFillRect(context, [self bounds]); 
 }
 
-- (bool) isSelectable
+- (bool)isSelectable
 { 
 	return true;
 }
 
-- (bool) isMoveable
+- (bool)isMoveable
 { 
 	return true;
 }
+
 @end

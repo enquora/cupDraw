@@ -15,113 +15,121 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation SelectionTool : StateMachineTool
+@implementation SelectionTool :StateMachineTool
 {
 	CPMutableArray _selectedFigures;
 	CPDictionary _initialPositions;
 	CGPoint _initialDragPoint;
 }
 
-- (id) init
+- (id)init
 { 
 	[super init];
 
 	_selectedFigures = [CPMutableArray array];
 	_initialPositions = [CPDictionary dictionary];
-	//[self setState: [SelectionToolInitialState tool: self]];
+	//[self setState:[SelectionToolInitialState tool:self]];
 
 	return self;
 }
 
-- (id) initialState
+- (id)initialState
 {
-	return [SelectionToolInitialState tool: self];
+	return [SelectionToolInitialState tool:self];
 }
 
-- (id) selectedFigures
+- (id)selectedFigures
 {
 	return _selectedFigures;
 }
 
-- (CPMutableArray) selectedFigures
+- (CPMutableArray)selectedFigures
 {
 	return _selectedFigures;
 }
 
-- (void) select: (Figure) aFigure
+- (void)select:(Figure)aFigure
 {
-	if (![_selectedFigures containsObjectIdenticalTo: aFigure]) {
-		[_selectedFigures addObject: aFigure];
+	if (![_selectedFigures containsObjectIdenticalTo:aFigure])
+    {
+		[_selectedFigures addObject:aFigure];
 		[aFigure select];
-		[_drawing selectedFigure: aFigure];
-		[_initialPositions setObject: [aFigure frameOrigin] forKey: aFigure];
+		[_drawing selectedFigure:aFigure];
+		[_initialPositions setObject:[aFigure frameOrigin] forKey:aFigure];
 	}
 }
 
-- (void) unselect: (Figure) aFigure
+- (void)unselect:(Figure)aFigure
 {
-	[_selectedFigures removeObject: aFigure];
+	[_selectedFigures removeObject:aFigure];
 	[aFigure unselect];
-	[_drawing selectedFigure: nil];
-	[_initialPositions removeObjectForKey: aFigure];
+	[_drawing selectedFigure:nil];
+	[_initialPositions removeObjectForKey:aFigure];
 }
 
-- (CPPoint) initialPositionOf: (Figure) aFigure
+- (CPPoint)initialPositionOf:(Figure)aFigure
 {
-	return [_initialPositions objectForKey: aFigure];
+	return [_initialPositions objectForKey:aFigure];
 }
 
-- (void) updateInitialPoints
+- (void)updateInitialPoints
 {
-	for (var i = 0; i < [_selectedFigures count]; i++) { 
+	for (var i = 0; i < [_selectedFigures count]; i++)
+    { 
 	    var selectedFigure = [_selectedFigures objectAtIndex:i];
-		[_initialPositions setObject: [selectedFigure frameOrigin] forKey: selectedFigure];
+		[_initialPositions setObject:[selectedFigure frameOrigin] forKey:selectedFigure];
 	}
 }
 
-- (void) clearSelection
+- (void)clearSelection
 {
-	for (var i = 0; i < [_selectedFigures count]; i++) { 
+	for (var i = 0; i < [_selectedFigures count]; i++)
+    { 
 	    var selectedFigure = [_selectedFigures objectAtIndex:i];
 		[selectedFigure unselect];
 	}
 	[_selectedFigures removeAllObjects];
 	[_initialPositions removeAllObjects];
-	[_drawing selectedFigure: nil];
+	[_drawing selectedFigure:nil];
 }
 
-- (void) release
+- (void)release
 {
 	[self clearSelection];
 }
 
-- (Figure) selectableFigure: (Figure) aFigure
+- (Figure)selectableFigure:(Figure)aFigure
 {
-	while (aFigure != _drawing && ![aFigure isSelectable]) {
+	while (aFigure != _drawing && ![aFigure isSelectable])
+    {
 		aFigure = [aFigure superview];
 	}
 	
 	return aFigure;
 }
 
-- (void) keyDown: (CPEvent) anEvent
+- (void)keyDown:(CPEvent)anEvent
 {
 }
 
-- (void) keyUp: (CPEvent) anEvent
+- (void)keyUp:(CPEvent)anEvent
 {
 	//CPLog.debug("Selection tool");
 	//CPLog.debug([_selectedFigures count]);
 	
-	if (([anEvent keyCode] ==~ CPKeyCodes.F2) && ([_selectedFigures count] == 1)) {
-		var currentFigure = [_selectedFigures objectAtIndex: 0];
-		if ([currentFigure isEditable]) {
+	if (([anEvent keyCode] ==~ CPKeyCodes.F2)&& ([_selectedFigures count] == 1))
+    {
+		var currentFigure = [_selectedFigures objectAtIndex:0];
+		if ([currentFigure isEditable])
+        {
 			[currentFigure switchToEditMode];
 		}
 	}
 	
-	if ([anEvent keyCode] ==~ CPKeyCodes.DELETE || [anEvent keyCode] ==~ CPKeyCodes.BACKSPACE) {
-		for (var i = 0; i < [_selectedFigures count]; i++) { 
+	if ([anEvent keyCode] ==~ CPKeyCodes.DELETE || [anEvent keyCode] ==~ CPKeyCodes.BACKSPACE)
+    {
+		for (var i = 0; i < [_selectedFigures count]; i++)
+        { 
 		    var selectedFigure = [_selectedFigures objectAtIndex:i];
 			[selectedFigure removeFromSuperview];
 		}

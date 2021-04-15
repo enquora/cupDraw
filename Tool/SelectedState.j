@@ -15,63 +15,71 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation SelectedState : ToolState
+@implementation SelectedState :ToolState
 {
 	CPPoint _initialDragPoint;
 }
 
-+ (id) tool: (StateMachineTool) aTool initialDragPoint: (CPPoint) anInitialDragPoint
++ (id)tool:(StateMachineTool)aTool initialDragPoint:(CPPoint)anInitialDragPoint
 {
-	var state = [self tool: aTool];
-	[state initWithInitialDragPoint: anInitialDragPoint];
+	var state = [self tool:aTool];
+	[state initWithInitialDragPoint:anInitialDragPoint];
 	return state;
 }
 
-- (id) initWithInitialDragPoint: (CPPoint) anInitialDragPoint
+- (id)initWithInitialDragPoint:(CPPoint)anInitialDragPoint
 {
 	_initialDragPoint = anInitialDragPoint;
 	return self;
 }
 
-- (void) mouseDown: (CPEvent) anEvent	 
+- (void)mouseDown:(CPEvent)anEvent	 
 {
 	var point = [anEvent locationInWindow];
 	var drawing = [_tool drawing];
-	var figureUnderPoint = [drawing figureAt: point];
-	figureUnderPoint = [_tool selectableFigure: figureUnderPoint];
+	var figureUnderPoint = [drawing figureAt:point];
+	figureUnderPoint = [_tool selectableFigure:figureUnderPoint];
 	_initialDragPoint = point;
 
-	if (figureUnderPoint == nil || figureUnderPoint == drawing) {
+	if (figureUnderPoint == nil || figureUnderPoint == drawing)
+    {
 		[_tool clearSelection];
 		[self transitionToInitialState];
-	} else {
-		if (![figureUnderPoint isHandle]) {
+	}
+    else
+    {
+		if (![figureUnderPoint isHandle])
+        {
 			var selectedFigures = [_tool selectedFigures];
-			var wasSelected = [selectedFigures containsObject: figureUnderPoint];
-			var notAddOperation = ([anEvent modifierFlags] & (CPControlKeyMask | CPCommandKeyMask)) == 0;
+			var wasSelected = [selectedFigures containsObject:figureUnderPoint];
+			var notAddOperation = ([anEvent modifierFlags] & (CPControlKeyMask | CPCommandKeyMask))== 0;
 			
-			if (!wasSelected && notAddOperation) {
+			if (!wasSelected && notAddOperation)
+            {
 				[_tool clearSelection];
 			}
 		}
-		[_tool select: figureUnderPoint];
+		[_tool select:figureUnderPoint];
 		[_tool updateInitialPoints];
 	}
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (void)mouseDragged:(CPEvent)anEvent
 {
 	var point = [anEvent locationInWindow];
-	var figureUnderPoint = [[_tool drawing] figureAt: point];
+	var figureUnderPoint = [[_tool drawing] figureAt:point];
 	
-	if ([figureUnderPoint isHandle]) {
-		[self transitionTo: [MoveHandleState tool: _tool initialDragPoint: _initialDragPoint handle: figureUnderPoint]];
-	} else {
-		[self transitionTo: [MoveFiguresState tool: _tool initialDragPoint: _initialDragPoint]];
+	if ([figureUnderPoint isHandle])
+    {
+		[self transitionTo:[MoveHandleState tool:_tool initialDragPoint:_initialDragPoint handle:figureUnderPoint]];
+	}
+    else
+    {
+		[self transitionTo:[MoveFiguresState tool:_tool initialDragPoint:_initialDragPoint]];
 	}
 }
 
-- (void) mouseUp:(CPEvent) anEvent
+- (void)mouseUp:(CPEvent)anEvent
 {
 	//stay here as we are selecting figures
 }

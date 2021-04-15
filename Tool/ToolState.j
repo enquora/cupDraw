@@ -15,62 +15,63 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation ToolState : CPObject
+@implementation ToolState :CPObject
 {
 	StateMachineTool _tool;
 }
 
-+ (id) tool: (StateMachineTool) aTool
++ (id)tool:(StateMachineTool)aTool
 {
-	return [[self new] initWithTool: aTool];
+	return [[self new] initWithTool:aTool];
 }
 
-- (id) initWithTool: (StateMachineTool) aTool
+- (id)initWithTool:(StateMachineTool)aTool
 { 
 	self = [super init];
-	if (self) {
+	if (self)
+    {
 		_tool = aTool;
 		return self;
 	}
 }
 
-- (void) transitionTo: (ToolState) aNewState
+- (void)transitionTo:(ToolState)aNewState
 {
-	[_tool setState: aNewState];
+	[_tool setState:aNewState];
 }
 
-- (void) activateSelectionTool
+- (void)activateSelectionTool
 {
 	[_tool activateSelectionTool];
 }
 
-- (void) transitionToInitialState
+- (void)transitionToInitialState
 {
-	[self transitionTo: [_tool initialState]];
+	[self transitionTo:[_tool initialState]];
 }
 
-- (void) mouseDown:(CPEvent) anEvent	 
-{
-	[self transitionToInitialState];
-}
-
-- (void) mouseDragged:(CPEvent) anEvent
+- (void)mouseDown:(CPEvent)anEvent	 
 {
 	[self transitionToInitialState];
 }
 
-- (void) mouseUp:(CPEvent) anEvent
+- (void)mouseDragged:(CPEvent)anEvent
 {
 	[self transitionToInitialState];
 }
 
-- (void) keyUp: (CPEvent) anEvent
+- (void)mouseUp:(CPEvent)anEvent
+{
+	[self transitionToInitialState];
+}
+
+- (void)keyUp:(CPEvent)anEvent
 {
 	CPLog.debug(anEvent);
 	[self transitionToInitialState];
 }
 
-- (void) keyDown: (CPEvent) anEvent
+- (void)keyDown:(CPEvent)anEvent
 {
 	CPLog.debug(anEvent);
 	[self transitionToInitialState];

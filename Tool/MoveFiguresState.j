@@ -20,20 +20,20 @@
 	CPPoint _initialDragPoint;
 }
 
-+ (id) tool: (StateMachineTool) aTool initialDragPoint: (CPPoint) anInitialDragPoint
++ (id)tool:(StateMachineTool)aTool initialDragPoint:(CPPoint)anInitialDragPoint
 {
 	var state = [self tool: aTool];
 	[state initWithInitialDragPoint: anInitialDragPoint];
 	return state;
 }
 
-- (id) initWithInitialDragPoint: (CPPoint) anInitialDragPoint
+- (id)initWithInitialDragPoint:(CPPoint)anInitialDragPoint
 {
 	_initialDragPoint = anInitialDragPoint;
 	return self;
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (void)mouseDragged:(CPEvent)anEvent
 {
 	var newLocation = [anEvent locationInWindow];
 	var dragXOffset = newLocation.x - _initialDragPoint.x;
@@ -44,13 +44,15 @@
 	var gridSize = [[_tool drawing] gridSize];
 	
 	//move each moveable figure
-	for (var i = 0; i < [selectedFigures count]; i++) { 
+	for (var i = 0; i < [selectedFigures count]; i++)
+    { 
 		var selectedFigure = [selectedFigures objectAtIndex:i];
 		var initialFigurePosition = [_tool initialPositionOf: selectedFigure];
 
 		var newOrigin = CGPointMake(initialFigurePosition.x + dragXOffset, initialFigurePosition.y + dragYOffset);
 		
-		if (snapToGrid) {
+		if (snapToGrid)
+        {
 			newOrigin = CGPointMake(ROUND(newOrigin.x / gridSize) * gridSize, ROUND(newOrigin.y / gridSize) * gridSize);
 		}
 	    
@@ -58,7 +60,7 @@
 	}
 }
 
-- (void) mouseUp:(CPEvent) anEvent
+- (void)mouseUp:(CPEvent)anEvent
 {
 	var point = [anEvent locationInWindow];
 	[self transitionTo: [SelectedState tool: _tool initialDragPoint: point]];

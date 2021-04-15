@@ -15,27 +15,27 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation MoveHandleState : ToolState
+@implementation MoveHandleState :ToolState
 {
 	CPPoint _initialDragPoint;
 	Handle _handle;
 }
 
-+ (id) tool: (StateMachineTool) aTool initialDragPoint: (CPPoint) anInitialDragPoint handle: (Handle) aHandle
++ (id)tool:(StateMachineTool)aTool initialDragPoint:(CPPoint)anInitialDragPoint handle:(Handle)aHandle
 {
-	var state = [self tool: aTool];
-	[state initWithInitialDragPoint: anInitialDragPoint handle: aHandle];
+	var state = [self tool:aTool];
+	[state initWithInitialDragPoint:anInitialDragPoint handle:aHandle];
 	return state;
 }
 
-- (id) initWithInitialDragPoint: (CPPoint) anInitialDragPoint handle: (Handle) aHandle
+- (id)initWithInitialDragPoint:(CPPoint)anInitialDragPoint handle:(Handle)aHandle
 {
 	_initialDragPoint = anInitialDragPoint;
 	_handle = aHandle;
 	return self;
 }
 
-- (void) mouseDragged:(CPEvent) anEvent
+- (void)mouseDragged:(CPEvent)anEvent
 {
 	var newLocation = [anEvent locationInWindow];
 	var dragXOffset = newLocation.x - _initialDragPoint.x;
@@ -44,20 +44,20 @@
 	var snapToGrid = [[_tool drawing] snapToGrid];
 	var gridSize = [[_tool drawing] gridSize];
 	
-	var initialFigurePosition = [_tool initialPositionOf: _handle];
+	var initialFigurePosition = [_tool initialPositionOf:_handle];
 
 	var newOrigin = CGPointMake(initialFigurePosition.x + dragXOffset, initialFigurePosition.y + dragYOffset);
 	
-	if (snapToGrid) {
-		newOrigin = CGPointMake(ROUND(newOrigin.x / gridSize) * gridSize, ROUND(newOrigin.y / gridSize) * gridSize);
+	if (snapToGrid){
+		newOrigin = CGPointMake(ROUND(newOrigin.x / gridSize)* gridSize, ROUND(newOrigin.y / gridSize)* gridSize);
 	}
 	
-    [_handle moveTo: newOrigin];
+    [_handle moveTo:newOrigin];
 }
 
-- (void) mouseUp:(CPEvent) anEvent
+- (void)mouseUp:(CPEvent)anEvent
 {
 	var point = [anEvent locationInWindow];
-	[self transitionTo: [SelectedState tool: _tool initialDragPoint: point]];
+	[self transitionTo:[SelectedState tool:_tool initialDragPoint:point]];
 }
 @end

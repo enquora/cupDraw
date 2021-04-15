@@ -15,52 +15,58 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation GroupFigure : CompositeFigure 
+@implementation GroupFigure :CompositeFigure 
 {
 }
 
-- (id) initWithFrame:(CGRect)aFrame 
+- (id)initWithFrame:(CGRect)aFrame 
 { 
 	self = [super initWithFrame:aFrame];
-	if (self) {
-		[handles addObject: [Handle target: self selector: @"topLeft"]];
-		[handles addObject: [Handle target: self selector: @"topMiddle"]];
-		[handles addObject: [Handle target: self selector: @"topRight"]];
+	if (self)
+    {
+		[handles addObject:[Handle target:self selector:@"topLeft"]];
+		[handles addObject:[Handle target:self selector:@"topMiddle"]];
+		[handles addObject:[Handle target:self selector:@"topRight"]];
 
-		[handles addObject: [Handle target: self selector: @"middleLeft"]];
-		[handles addObject: [Handle target: self selector: @"middleRight"]];
+		[handles addObject:[Handle target:self selector:@"middleLeft"]];
+		[handles addObject:[Handle target:self selector:@"middleRight"]];
 
-		[handles addObject: [Handle target: self selector: @"bottomLeft"]];
-		[handles addObject: [Handle target: self selector: @"bottomMiddle"]];
-		[handles addObject: [Handle target: self selector: @"bottomRight"]];
+		[handles addObject:[Handle target:self selector:@"bottomLeft"]];
+		[handles addObject:[Handle target:self selector:@"bottomMiddle"]];
+		[handles addObject:[Handle target:self selector:@"bottomRight"]];
 		return self;
 	}
 }
 
-- (id) figureAt: (CPPoint) aPoint
+- (id)figureAt:(CPPoint)aPoint
 {
-	var figure = [self primSubfiguresAt: aPoint];
-	if (figure != nil) {
+	var figure = [self primSubfiguresAt:aPoint];
+	if (figure != nil)
+    {
 		return self;
-	} else {
+	}
+    else
+    {
 		return nil;
 	}
 }
 
-- (id) ungroup
+- (id)ungroup
 {
 	var parent = [self superview];
 	var figures = [self figures];
 	var translation = [self frameOrigin];
 	
-	[parent removeFigure: self];
+	[parent removeFigure:self];
 
-	for (var i = 0; i < [figures count]; i++) { 
-	    var figure = [figures objectAtIndex: i];
-		[figure translateBy: translation];
-		[parent addFigure: figure];
+	for (var i = 0; i < [figures count]; i++)
+    { 
+	    var figure = [figures objectAtIndex:i];
+		[figure translateBy:translation];
+		[parent addFigure:figure];
 	}
 	
 	return figures;
 }
+
 @end

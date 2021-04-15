@@ -17,14 +17,14 @@
  */
 @implementation PropertiesFigure : Figure 
 { 
-	Drawing _drawing;
-	Figure _selectedFigure;
-	CPTableColumn _nameColumn;
-	CPTableColumn _valueColumn;
-	CPTableView _tableView;
-	id _currentTextFieldEdition;
-	id _currentRowIndex;
-	id _checkboxMapping;
+    Drawing        _drawing;
+    Figure         _selectedFigure;
+    CPTableColumn  _nameColumn;
+    CPTableColumn  _valueColumn;
+    CPTableView    _tableView;
+    id             _currentTextFieldEdition;
+    id             _currentRowIndex;
+    id             _checkboxMapping;
 }
 
 + (CPRect) defaultFrame

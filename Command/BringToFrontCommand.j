@@ -19,16 +19,17 @@
 {
 }
 
-- (void) undo
+- (void)undo
 {
 }
 
-- (void) execute
+- (void)execute
 {
 	var tool = [_drawing tool];
 	var selectedFigures = [tool selectedFigures];
 	
-	if ([selectedFigures count] == 1) {
+	if ([selectedFigures count] == 1)
+    {
 		var subviews = [_drawing subviews];
 
 	    var figure = [selectedFigures objectAtIndex: 0];

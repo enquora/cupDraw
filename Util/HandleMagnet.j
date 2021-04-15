@@ -15,70 +15,71 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation HandleMagnet : CPObject
+@implementation HandleMagnet :CPObject
 {
 	Handle _handle;
 	Figure _sourceFigure;
 	Figure _targetFigure;
 }
 
-- (id) initWithHandle: (Handle) aHandle source: aSourceFigure target: aTargetFigure 
+- (id)initWithHandle:(Handle)aHandle source:aSourceFigure target:aTargetFigure 
 { 
 	self = [super init];
-	if (self) {
+	if (self)
+    {
 		_handle = aHandle;
 		_sourceFigure = aSourceFigure;
 		_targetFigure = aTargetFigure;
 
 		[[CPNotificationCenter defaultCenter] 
-			addObserver: self 
-			selector: @selector(updateHandleLocation:) 
-			name: @"CPViewFrameDidChangeNotification" 
-			object: _targetFigure];
+			addObserver:self 
+			selector:@selector(updateHandleLocation:)
+			name:@"CPViewFrameDidChangeNotification" 
+			object:_targetFigure];
 
 		[[CPNotificationCenter defaultCenter] 
-			addObserver: self 
-			selector: @selector(updateHandleLocation:) 
-			name: @"CPViewFrameDidChangeNotification" 
-			object: _handle];
+			addObserver:self 
+			selector:@selector(updateHandleLocation:)
+			name:@"CPViewFrameDidChangeNotification" 
+			object:_handle];
 
 		[[CPNotificationCenter defaultCenter] 
-			addObserver: self 
-			selector: @selector(updateHandleLocation:) 
-			name: @"CPViewFrameDidChangeNotification" 
-			object: [_handle targetFigure]];
+			addObserver:self 
+			selector:@selector(updateHandleLocation:)
+			name:@"CPViewFrameDidChangeNotification" 
+			object:[_handle targetFigure]];
 
 		return self;
 	}
 }
 
-- (void) updateHandleLocation: aNotification
+- (void)updateHandleLocation:aNotification
 {
 	var sourceCenter = [_sourceFigure center];
 
 	var p1 = [GeometryUtils 
-				intersectionOf: [_targetFigure topLeft] 
-				with: [_targetFigure topRight]  
-				with: [_targetFigure center] 
-				with: sourceCenter];
+				intersectionOf:[_targetFigure topLeft] 
+				with:[_targetFigure topRight]  
+				with:[_targetFigure center] 
+				with:sourceCenter];
 	
 	var p2 = [GeometryUtils 
-				intersectionOf: [_targetFigure topRight] 
-				with: [_targetFigure bottomRight]  
-				with: [_targetFigure center] 
-				with: sourceCenter];
+				intersectionOf:[_targetFigure topRight] 
+				with:[_targetFigure bottomRight]  
+				with:[_targetFigure center] 
+				with:sourceCenter];
 							
 	var p3 = [GeometryUtils 
-				intersectionOf: [_targetFigure bottomRight] 
-				with: [_targetFigure bottomLeft]  
-				with: [_targetFigure center] 
-				with: sourceCenter];
+				intersectionOf:[_targetFigure bottomRight] 
+				with:[_targetFigure bottomLeft]  
+				with:[_targetFigure center] 
+				with:sourceCenter];
 										
 	var p4 = [GeometryUtils 
-				intersectionOf: [_targetFigure bottomLeft] 
-				with: [_targetFigure topLeft]  
-				with: [_targetFigure center] 
-				with: sourceCenter];
+				intersectionOf:[_targetFigure bottomLeft] 
+				with:[_targetFigure topLeft]  
+				with:[_targetFigure center] 
+				with:sourceCenter];
 
 	/*CPLog.debug(sourceCenter.x);
 	CPLog.debug(sourceCenter.y);
@@ -93,22 +94,29 @@
 				
 	var selected = p1;
 	
-	if (selected == nil || (p2 != nil && ([GeometryUtils distanceFrom: p2 to: [_handle center]] < [GeometryUtils distanceFrom: selected to: [_handle center]]))) {
+	if (selected == nil || (p2 != nil && ([GeometryUtils distanceFrom:p2 to:[_handle center]] < [GeometryUtils distanceFrom:selected to:[_handle center]])))
+    {
 		selected = p2;
 	}
-	if (selected == nil || (p3 != nil && ([GeometryUtils distanceFrom: p3 to: [_handle center]] < [GeometryUtils distanceFrom: selected to: [_handle center]]))) {
+	if (selected == nil || (p3 != nil && ([GeometryUtils distanceFrom:p3 to:[_handle center]] < [GeometryUtils distanceFrom:selected to:[_handle center]])))
+    {
 		selected = p3;
 	}
-	if (selected == nil || (p4 != nil && ([GeometryUtils distanceFrom: p4 to: [_handle center]] < [GeometryUtils distanceFrom: selected to: [_handle center]]))) {
+	if (selected == nil || (p4 != nil && ([GeometryUtils distanceFrom:p4 to:[_handle center]] < [GeometryUtils distanceFrom:selected to:[_handle center]])))
+    {
 		selected = p4;
 	}
 	
-	if (selected != nil) {
-		[_handle setFrameOrigin: selected];
+	if (selected != nil)
+    {
+		[_handle setFrameOrigin:selected];
 		//CPLog.debug(selected.x);
 		//CPLog.debug(selected.y);
-	} else {
+	}
+    else
+    {
 		//CPLog.debug(@"Selected is null");
 	}
 }
+
 @end

@@ -20,22 +20,22 @@
 	Drawing _drawing;
 }
 
-+ (id) drawing: (Drawing) aDrawing
++ (id)drawing:(Drawing)aDrawing
 {
 	return [[self new] initWithDrawing: aDrawing];
 }
 
-- (id) initWithDrawing: (Drawing) aDrawing 
+- (id)initWithDrawing:(Drawing)aDrawing 
 { 
 	_drawing = aDrawing;
 	return self;
 }
 
-- (void) undo
+- (void)undo
 {
 }
 
-- (void) execute
+- (void)execute
 {
 }
 @end

@@ -20,30 +20,42 @@
 	id _model;
 }
 
-- (id) dataViewForRow: (int) aRowIndex
+- (id)dataViewForRow:(int) RowIndex
 {
-	if (aRowIndex < 0 || _model == nil) {
+	if (aRowIndex < 0 || _model == nil)
+    {
 		return  [self dataView];
-	} else {
+	}
+    else
+    {
 		var propertyType = [_model propertyTypeAt: aRowIndex];
-		if ([propertyType isEqual: PropertyTypeBoolean]) {
+		if ([propertyType isEqual: PropertyTypeBoolean])
+        {
 			var editableView = [CPCheckBox checkBoxWithTitle:@""];
         	[editableView sizeToFit];
         	return editableView;		
-		} else if ([propertyType isEqual: PropertyTypeInteger]) {
+		}
+        else if ([propertyType isEqual: PropertyTypeInteger])
+        {
 			return  [self dataView];
-		} else if ([propertyType isEqual: PropertyTypeFloat]) {
+		}
+        else if ([propertyType isEqual: PropertyTypeFloat])
+        {
 			return  [self dataView];
-		} else if ([propertyType isEqual: PropertyTypeString]) {
+		}
+        else if ([propertyType isEqual: PropertyTypeString])
+        {
 			return  [self dataView];
-		} else {
+		}
+        else
+        {
 			return  [self dataView];
 		}
 	}
 }
 
 
-- (void) model: (id) aModel
+- (void)model:(id)aModel
 {
 	_model = aModel;
 }

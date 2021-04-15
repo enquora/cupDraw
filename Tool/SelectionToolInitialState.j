@@ -30,16 +30,19 @@
 	return self;
 }
 
-- (void) mouseDown: (CPEvent) anEvent	 
+- (void)mouseDown:(CPEvent)anEvent	 
 {
 	var point = [anEvent locationInWindow];
 	var figureUnderPoint = [[_tool drawing] figureAt: point];
 	figureUnderPoint = [_tool selectableFigure: figureUnderPoint];
 
-	if (figureUnderPoint != nil && (figureUnderPoint != [_tool drawing])) {
+	if (figureUnderPoint != nil && (figureUnderPoint != [_tool drawing]))
+    {
 		[_tool select: figureUnderPoint];
 		[self transitionTo: [SelectedState tool: _tool initialDragPoint: point]];
-	} else {
+	}
+    else
+    {
 		[_tool clearSelection];
 		[self transitionTo: [MarqueeSelectionState tool: _tool initialDragPoint: point]];
 	}

@@ -17,61 +17,64 @@
  */
 var CachedNotificationCenter    = nil;
 
-@implementation Polyline : Figure 
+@implementation Polyline :Figure 
 { 
 	CPMutableArray _points;
 	id _lineWidth;
 } 
 
-- (id) initWithPoints: (CPArray) anArrayOfPoints
+- (id)initWithPoints:(CPArray)anArrayOfPoints
 { 
 	CachedNotificationCenter = [CPNotificationCenter defaultCenter];
-	var frame = [GeometryUtils computeFrameFor: anArrayOfPoints];
-	self = [super initWithFrame: frame];
+	var frame = [GeometryUtils computeFrameFor:anArrayOfPoints];
+	self = [super initWithFrame:frame];
 
-	_points = [CPMutableArray arrayWithArray: anArrayOfPoints];
+	_points = [CPMutableArray arrayWithArray:anArrayOfPoints];
 	_lineWidth = 0.5;
 	
-	for (var i = 0; i < [_points count]; i++) { 
+	for (var i = 0; i < [_points count]; i++)
+    { 
 	    var point = [_points objectAtIndex:i];
 		
-		[handles addObject: [self addNewHandle: i]];
+		[handles addObject:[self addNewHandle:i]];
 		
-		if (i != [_points count] - 1) {
-			[handles addObject: [self addCreateHandle: i]];
+		if (i != [_points count] - 1)
+        {
+			[handles addObject:[self addCreateHandle:i]];
 		}
 	}
 	
-	if (self) {
+	if (self)
+    {
 		return self;
 	}
 }
 
-- (id) points
+- (id)points
 {
 	return _points;
 }
 
-- (Handle) addNewHandle: (int) anIndex
+- (Handle)addNewHandle:(int)anIndex
 {
 	var newHandle = [Handle 
-		target: self 
-		getSelector: @selector(pointAt:) 
-		setSelector: @selector(pointAt:put:)
-		extraArgument: anIndex];
+		target:self 
+		getSelector:@selector(pointAt:)
+		setSelector:@selector(pointAt:put:)
+		extraArgument:anIndex];
 
 	return newHandle;
 }
 
-- (Handle) addCreateHandle: (int) anIndex
+- (Handle)addCreateHandle:(int)anIndex
 {
 	var createHandle = [Handle 
-		target: self 
-		getSelector: @selector(insertionPointAt:) 
-		setSelector: @selector(createPointAt:put:)
-		extraArgument: anIndex];
+		target:self 
+		getSelector:@selector(insertionPointAt:)
+		setSelector:@selector(createPointAt:put:)
+		extraArgument:anIndex];
 		
-	[createHandle displayColor: [CPColor redColor]];
+	[createHandle displayColor:[CPColor redColor]];
 	
 	return createHandle;
 }
@@ -81,105 +84,108 @@ var CachedNotificationCenter    = nil;
 	return true;
 }
 
-- (CPPoint) pointAt: (int) anIndex
+- (CPPoint)pointAt:(int)anIndex
 {
-	var point = [_points objectAtIndex: anIndex];
+	var point = [_points objectAtIndex:anIndex];
 	return point;
 }
 
-- (void) pointAt: (int) anIndex put: (CPPoint) aPoint
+- (void)pointAt:(int)anIndex put:(CPPoint)aPoint
 {
-	[_points replaceObjectAtIndex: anIndex withObject: aPoint];
+	[_points replaceObjectAtIndex:anIndex withObject:aPoint];
 	[self recomputeFrame];
 }
 
-- (CPPoint) insertionPointAt: (int)anIndex
+- (CPPoint)insertionPointAt:(int)anIndex
 {
-	var point1 = [_points objectAtIndex: anIndex];
-	var point2 = [_points objectAtIndex: (anIndex + 1)];
+	var point1 = [_points objectAtIndex:anIndex];
+	var point2 = [_points objectAtIndex:(anIndex + 1)];
 	
-	var x = (point1.x + point2.x) / 2;
-	var y = (point1.y + point2.y) / 2;
+	var x = (point1.x + point2.x)/ 2;
+	var y = (point1.y + point2.y)/ 2;
 
 	return CGPointMake(x,y);
 }
 
-- (void) createPointAt: (int)anIndex put: (CPPoint) aPoint
+- (void)createPointAt:(int)anIndex put:(CPPoint)aPoint
 {
 	//insert the point in that position
 	var insertIndex = anIndex + 1;
-	[_points insertObject: aPoint atIndex: insertIndex];
+	[_points insertObject:aPoint atIndex: insertIndex];
 	
 	//convert the create handle into a translate handle
-	var handleIndex = (anIndex * 2) + 1;
-	var handleToConvert = [handles objectAtIndex: handleIndex];
+	var handleIndex = (anIndex * 2)+ 1;
+	var handleToConvert = [handles objectAtIndex:handleIndex];
 	
 	//CPLog.debug([handleToConvert]);
 	//CPLog.info(@"createPoint1");
-	[handleToConvert displayColor: [CPColor blackColor]]; 
-	[handleToConvert getSelector: @selector(pointAt:) setSelector: @selector(pointAt:put:)]; 
-	[handleToConvert extraArgument: insertIndex]; 
+	[handleToConvert displayColor:[CPColor blackColor]]; 
+	[handleToConvert getSelector:@selector(pointAt:)setSelector:@selector(pointAt:put:)]; 
+	[handleToConvert extraArgument:insertIndex]; 
 	//CPLog.info(@"createPoint2");
 
-	var newCreateHandleBefore = [self addCreateHandle: insertIndex - 1];
-	var newCreateHandleAfter = [self addCreateHandle: insertIndex];
+	var newCreateHandleBefore = [self addCreateHandle:insertIndex - 1];
+	var newCreateHandleAfter = [self addCreateHandle:insertIndex];
 
-	[handles insertObject: newCreateHandleAfter atIndex: handleIndex + 1];
-	[handles insertObject: newCreateHandleBefore atIndex: handleIndex];
+	[handles insertObject:newCreateHandleAfter atIndex: handleIndex + 1];
+	[handles insertObject:newCreateHandleBefore atIndex: handleIndex];
 
-	for (var i = handleIndex; i < [handles count]; i++) { 
-	    var handle = [handles objectAtIndex: i];
+	for (var i = handleIndex; i < [handles count]; i++)
+    { 
+	    var handle = [handles objectAtIndex:i];
 		var extraArg = FLOOR(i / 2);
-		[handle extraArgument: extraArg]; 
+		[handle extraArgument:extraArg]; 
 	}
 	
 	var diagram = [self superview];
 	
-	[diagram addFigure: newCreateHandleBefore];
-	[diagram addFigure: newCreateHandleAfter];
+	[diagram addFigure:newCreateHandleBefore];
+	[diagram addFigure:newCreateHandleAfter];
 	
 	[self recomputeFrame];
-	//if (CPRectContainsPoint([self frame], aPoint)) {
+	//if (CPRectContainsPoint([self frame], aPoint)){
 	//} else {
 	//}
 	//add 1 create handle before
-	//var createHandleBefore = [self addCreateHandle: (insertIndex - 1)];
+	//var createHandleBefore = [self addCreateHandle:(insertIndex - 1)];
 	
 	//add 1 create handle after
-	//var createHandleAfter = [self addCreateHandle: insertIndex];
+	//var createHandleAfter = [self addCreateHandle:insertIndex];
 	
 	
 	//var count = [_points count];
 	
-	//var newCreateHandle = [self addCreateHandle: (count - 2)];
-	//var newNewHandle = [self addNewHandle: (count - 1)];
+	//var newCreateHandle = [self addCreateHandle:(count - 2)];
+	//var newNewHandle = [self addNewHandle:(count - 1)];
 	
-	//[handles addObject: newCreateHandle];
-	//[handles addObject: newNewHandle];
+	//[handles addObject:newCreateHandle];
+	//[handles addObject:newNewHandle];
 	
 	//var diagram = [self superview];
 	
-	//[handles insertObject: newCreateHandle atIndex: (insertIndex * 2)];
-	//[handles insertObject: newNewHandle atIndex: (insertIndex * 2)];
+	//[handles insertObject:newCreateHandle atIndex:(insertIndex * 2)];
+	//[handles insertObject:newNewHandle atIndex:(insertIndex * 2)];
 
-	//[diagram addSubview: newCreateHandle];
-	//[diagram addSubview: newNewHandle];
+	//[diagram addSubview:newCreateHandle];
+	//[diagram addSubview:newNewHandle];
 	
-	/*for (var i = 0; i < [handles count]; i++) { 
-		var handle = [handles objectAtIndex: i];
-		[handle extraArgument: FLOOR(i/2)];
-		[handle updateLocation: nil];
+	/*for (var i = 0; i < [handles count]; i++){ 
+		var handle = [handles objectAtIndex:i];
+		[handle extraArgument:FLOOR(i/2)];
+		[handle updateLocation:nil];
 	}*/
 	
 	
 }
 
-- (void)figureAt:(CPPoint) aPoint
+- (void)figureAt:(CPPoint)aPoint
 {
-	for (var i = 0; i < [_points count] - 1; i++) { 
-	    var a = [_points objectAtIndex: i];
-	    var b = [_points objectAtIndex: (i + 1)];
-		if ([GeometryUtils distanceFrom: a and: b to: aPoint] < 5) {
+	for (var i = 0; i < [_points count] - 1; i++)
+    { 
+	    var a = [_points objectAtIndex:i];
+	    var b = [_points objectAtIndex:(i + 1)];
+		if ([GeometryUtils distanceFrom:a and:b to:aPoint] < 5)
+        {
 			return self;
 		}
 	}
@@ -187,14 +193,14 @@ var CachedNotificationCenter    = nil;
 	return nil;
 }
 
-- (void) recomputeFrame
+- (void)recomputeFrame
 {
-	var newFrame = [GeometryUtils computeFrameFor: _points];
-	[self setNeedsDisplay: YES];
-	[self setFrame: newFrame];
+	var newFrame = [GeometryUtils computeFrameFor:_points];
+	[self setNeedsDisplay:YES];
+	[self setFrame:newFrame];
 }
 
-- (void) drawRect:(CGRect) rect on: (id) context
+- (void)drawRect:(CGRect)rect on:(id)context
 {
 	//CGContextSetFillColor(context, [CPColor yellowColor]);
 	//CGContextFillRect(context, rect);
@@ -206,7 +212,8 @@ var CachedNotificationCenter    = nil;
 	CGContextMoveToPoint(context, intialPoint.x - origin.x, intialPoint.y - origin.y);
 
 	//CPLog.debug([_points count]);
-	for (var i = 1; i < [_points count]; i++) { 
+	for (var i = 1; i < [_points count]; i++)
+    { 
 	    var point = [_points objectAtIndex:i];
 		//CGContextAddLineToPoint(context, point.x, point.y);
 		CGContextAddLineToPoint(context, point.x - origin.x, point.y - origin.y);
@@ -218,26 +225,28 @@ var CachedNotificationCenter    = nil;
     CGContextStrokePath(context);
 }
 
-- (void) translatedBy: (CGPoint) aPoint
+- (void)translatedBy:(CGPoint)aPoint
 {
 	var frame = [self frame];
 	var xOffset = aPoint.x - frame.origin.x;
 	var yOffset = aPoint.y - frame.origin.y;
-	for (var i = 0; i < [_points count]; i++) { 
+	for (var i = 0; i < [_points count]; i++)
+    { 
 	    var point = [_points objectAtIndex:i];
 		point = CGPointMake(point.x + xOffset, point.y + yOffset);
-		[_points replaceObjectAtIndex: i withObject: point];
+		[_points replaceObjectAtIndex:i withObject:point];
 	}
-	[super translatedBy: aPoint];
+	[super translatedBy:aPoint];
 }
 
-- (id) lineWidth
+- (id)lineWidth
 {
 	return _lineWidth;
 }
 
-- (void) lineWidth: aLineWidth
+- (void)lineWidth:aLineWidth
 {
 	_lineWidth = aLineWidth;
 }
+
 @end

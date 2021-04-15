@@ -29,22 +29,22 @@ PropertyTypeString  = @"TYPE_STRING";
 	boolean _editable;
 }
 
-+ (Property) name: (id) aPropertyName value: (id) aValue
++ (Property)name:(id)aPropertyName value:(id)aValue
 {
 	return [self name: aPropertyName displayName: aPropertyName value: aValue];
 }
 
-+ (Property) name: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue
++ (Property)name:(id)aPropertyName displayName:(id)aDisplayName value:(id)aValue
 {
 	return [[self new] initWithName: aPropertyName displayName: aDisplayName value: aValue type: PropertyTypeString];
 }
 
-+ (Property) name: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue type: (id) aType
++ (Property)name:(id)aPropertyName displayName:(id)aDisplayName value:(id)aValue type:(id)aType
 {
 	return [[self new] initWithName: aPropertyName displayName: aDisplayName value: aValue type: aType];
 }
 
-- (id) initWithName: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue type: (id) aType
+- (id)initWithName:(id)aPropertyName displayName:(id)aDisplayName value:(id)aValue type:(id)aType
 {
 	_name = aPropertyName;
 	_value = aValue;
@@ -54,37 +54,37 @@ PropertyTypeString  = @"TYPE_STRING";
 	return self;
 }
 
-- (id) name
+- (id)name
 {
 	return _name;
 }
 
-- (id) type
+- (id)type
 {
 	return _type;
 }
 
-- (id) displayName
+- (id)displayName
 {
 	return _displayName;
 }
 
-- (id) value
+- (id)value
 {
 	return _value;
 }
 
-- (void) value: aValue
+- (void)value:aValue
 {
 	_value = aValue;
 }
 
-- (boolean) editable
+- (boolean)editable
 {
 	return _editable;
 }
 
-- (void) editable: aValue
+- (void)editable:aValue
 {
 	_editable = aValue;
 }

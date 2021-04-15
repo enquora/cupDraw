@@ -19,20 +19,22 @@
 {
 }
 
-- (void) undo
+- (void)undo
 {
 }
 
-- (void) execute
+- (void)execute
 {
 	var tool = [_drawing tool];
 	var selectedFigures = [tool selectedFigures];
 	
-	if ([selectedFigures count] > 1) {
+	if ([selectedFigures count] > 1)
+    {
 	    var referenceFigure = [selectedFigures objectAtIndex: 0];
 		var y = [referenceFigure bottomMiddle].y;
 		
-		for (var i = 1; i < [selectedFigures count]; i++) { 
+		for (var i = 1; i < [selectedFigures count]; i++)
+        { 
 		    var figure = [selectedFigures objectAtIndex: i];
 		    var oldFrameOrigin = [figure frameOrigin];
 		    var frameSize = [figure frameSize];
@@ -43,4 +45,5 @@
 		[tool updateInitialPoints];
 	}
 }
+
 @end

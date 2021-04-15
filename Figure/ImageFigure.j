@@ -17,9 +17,9 @@
  */
 @implementation ImageFigure : Figure 
 {
-	CPTextField _textField;
-	id _offset;
-	boolean _showBorder;
+    CPTextField  _textField;
+    id           _offset;
+    boolean      _showBorder;
 }
 
 + (ImageFigure) initializeWithImage: (id) stringResource x: (id) anX y: (id) anY

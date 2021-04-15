@@ -19,11 +19,11 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
  */
 @implementation Drawing : CompositeFigure 
 {
-	Tool _currentTool;
-	id _selectedFigure;
-	Figure _backgroundLayer;
-	ToolboxFigure _toolbox;
-	PropertiesFigure _properties;
+    Tool              _currentTool;
+    id                _selectedFigure;
+    Figure            _backgroundLayer;
+    ToolboxFigure     _toolbox;
+    PropertiesFigure  _properties;
 } 
 
 - (id) init

@@ -17,9 +17,9 @@
  */
 @implementation Grid : Figure 
 {
-	bool _showGrid;
-	int _gridSize;
-	CPColor _gridColor;
+    bool     _showGrid;
+    int      _gridSize;
+    CPColor  _gridColor;
 } 
 
 + (Grid) frame: (CGRect) aFrame showGrid: (bool) aShowGrid gridSize: (int) aGridSize
