@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation ToolboxFigure :Figure 
+@implementation ToolboxFigure : Figure 
 {
 	Drawing _drawing;
 	CPDictionary _buttonsMapping;

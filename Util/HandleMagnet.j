@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation HandleMagnet :CPObject
+@implementation HandleMagnet : CPObject
 {
 	Handle _handle;
 	Figure _sourceFigure;

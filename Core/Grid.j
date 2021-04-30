@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Grid :Figure 
+@implementation Grid : Figure 
 {
     bool     _showGrid;
     int      _gridSize;

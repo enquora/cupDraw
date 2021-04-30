@@ -17,7 +17,7 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Model :CPObject
+@implementation Model : CPObject
 {
     CPMutableArray  _properties;
     CPDictionary    _propertiesByName;

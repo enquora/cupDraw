@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation SelectedState :ToolState
+@implementation SelectedState : ToolState
 {
 	CPPoint _initialDragPoint;
 }

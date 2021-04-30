@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Connection :Polyline 
+@implementation Connection : Polyline 
 { 
     Figure        _sourceFigure;
     Figure        _targetFigure;

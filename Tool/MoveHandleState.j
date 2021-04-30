@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation MoveHandleState :ToolState
+@implementation MoveHandleState : ToolState
 {
 	CPPoint _initialDragPoint;
 	Handle _handle;

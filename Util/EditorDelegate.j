@@ -23,42 +23,42 @@
     id           _window;
 }
 
-- (id) initWithWidget: (Figure) aFigure label: (CPTextField) aLabel window: (id) aWindow figureContainer: (Figure) aContainer drawing: (Drawing) aDrawing
+- (id)initWithWidget:(Figure)aFigure label:(CPTextField)aLabel window:(id)aWindow figureContainer:(Figure)aContainer drawing:(Drawing)aDrawing
 { 
 	self = [super init];
-	if (self) {
+	if (self){
 		var width = [aLabel frameSize].width + (6 * 2);
 		var currentValue = [aLabel objectValue];
 
 		var position = [aDrawing 
-			convertPoint: CPPointMake(-5, -5)
-			fromView: aFigure];
+			convertPoint:CPPointMake(-5, -5)
+			fromView:aFigure];
 
 		var editableLabel = [CPCancelableTextField 
-			textFieldWithStringValue: currentValue
-			placeholder: @""
-			width: width];
+			textFieldWithStringValue:currentValue
+			placeholder:@""
+			width:width];
 
-		[editableLabel setEditable: YES];
-		[editableLabel setBordered: NO];
+		[editableLabel setEditable:YES];
+		[editableLabel setBordered:NO];
 		[editableLabel sizeToFit];
-		[editableLabel setFrameOrigin: position];
-		[editableLabel cancelator: self];
+		[editableLabel setFrameOrigin:position];
+		[editableLabel cancelator:self];
 		
 		[[CPNotificationCenter defaultCenter] 
-			addObserver: self 
-			selector: @selector(controlTextDidBlur:) 
-			name: CPTextFieldDidBlurNotification 
-			object: editableLabel];
+			addObserver:self 
+			selector:@selector(controlTextDidBlur:)
+			name:CPTextFieldDidBlurNotification 
+			object:editableLabel];
 
 		[[CPNotificationCenter defaultCenter] 
-			addObserver: self 
-			selector: @selector(controlTextDidEndEditing:) 
-			name: CPControlTextDidEndEditingNotification 
-			object: editableLabel];
+			addObserver:self 
+			selector:@selector(controlTextDidEndEditing:)
+			name:CPControlTextDidEndEditingNotification 
+			object:editableLabel];
 
-		[[aWindow contentView] addSubview: editableLabel];
-		[aWindow makeFirstResponder: editableLabel];
+		[[aWindow contentView] addSubview:editableLabel];
+		[aWindow makeFirstResponder:editableLabel];
 
 		_editableLabel = editableLabel;
 		_editableFigure = aContainer;
@@ -69,42 +69,42 @@
 	}
 }
 
-- (void) controlTextDidChange: (CPNotification) notification
+- (void)controlTextDidChange:(CPNotification)notification
 {
 	var keyValue = [[notification userInfo] objectForKey: @"CPFieldEditor"];
 	CPLog.debug(keyValue);
 }
 
-- (void) controlTextDidEndEditing: (CPNotification) notification
+- (void)controlTextDidEndEditing:(CPNotification)notification
 {
-	[_editableFigure setEditionResult: [_editableLabel objectValue]];
+	[_editableFigure setEditionResult:[_editableLabel objectValue]];
 	[self cleanUp];
 }
 
-- (void) controlTextDidBlur: (CPNotification) notification
+- (void)controlTextDidBlur:(CPNotification)notification
 {
-	[self controlTextDidEndEditing: notification];
+	[self controlTextDidEndEditing:notification];
 }
 
-- (void) cancelEditing
+- (void)cancelEditing
 {
 	[self cleanUp];
 }
 
-- (void) cleanUp
+- (void)cleanUp
 {
 	[[CPNotificationCenter defaultCenter] 
 		removeObserver:self
-		name: CPControlTextDidEndEditingNotification 
-		object: _editableLabel];
+		name:CPControlTextDidEndEditingNotification 
+		object:_editableLabel];
 		
 	[[CPNotificationCenter defaultCenter] 
 		removeObserver:self
-		name: CPTextFieldDidBlurNotification 
-		object: _editableLabel];
+		name:CPTextFieldDidBlurNotification 
+		object:_editableLabel];
 		
 	[_editableLabel removeFromSuperview];
-	[_window makeFirstResponder: _drawing];
+	[_window makeFirstResponder:_drawing];
 }
 
 @end

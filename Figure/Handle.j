@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Handle :Figure 
+@implementation Handle : Figure 
 { 
     Figure   _targetFigure;
     SEL      _getSelector;

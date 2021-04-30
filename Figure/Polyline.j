@@ -17,7 +17,7 @@
  */
 var CachedNotificationCenter    = nil;
 
-@implementation Polyline :Figure 
+@implementation Polyline : Figure 
 { 
 	CPMutableArray _points;
 	id _lineWidth;

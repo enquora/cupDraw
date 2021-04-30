@@ -17,7 +17,7 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Drawing :CompositeFigure 
+@implementation Drawing : CompositeFigure 
 {
     Tool              _currentTool;
     id                _selectedFigure;

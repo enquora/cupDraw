@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation CircleFigure :Figure 
+@implementation CircleFigure : Figure 
 { 
 } 
 

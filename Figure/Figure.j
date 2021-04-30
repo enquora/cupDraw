@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Figure :CPView 
+@implementation Figure : CPView 
 {
     CPMutableArray  handles;
     CPMutableArray  _inConnections;

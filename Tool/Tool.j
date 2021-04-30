@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation Tool :CPObject
+@implementation Tool : CPObject
 {
 	Drawing _drawing;
 }

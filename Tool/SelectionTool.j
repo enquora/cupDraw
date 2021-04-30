@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation SelectionTool :StateMachineTool
+@implementation SelectionTool : StateMachineTool
 {
 	CPMutableArray _selectedFigures;
 	CPDictionary _initialPositions;

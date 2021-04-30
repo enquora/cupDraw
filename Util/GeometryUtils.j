@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation GeometryUtils :CPObject
+@implementation GeometryUtils : CPObject
 {
 }
 

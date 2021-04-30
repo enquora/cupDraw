@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation IconLabelFigure :Figure 
+@implementation IconLabelFigure : Figure 
 { 
 	CPTextField _label;
 	CPString _iconUrl;

@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation AbstractCreateConnectionTool :Tool
+@implementation AbstractCreateConnectionTool : Tool
 {
 	Connection _connection;
 	Figure _initialFigure;

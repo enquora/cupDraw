@@ -19,32 +19,32 @@
 {
 }
 
-+ (id) tool: (StateMachineTool) aTool
++ (id)tool:(StateMachineTool)aTool
 {
-	return [[self new] initWithTool: aTool];
+	return [[self new] initWithTool:aTool];
 }
 
-- (id) initWithTool: (StateMachineTool) aTool
+- (id)initWithTool:(StateMachineTool)aTool
 { 
-	[super initWithTool: aTool];
+	[super initWithTool:aTool];
 	return self;
 }
 
 - (void)mouseDown:(CPEvent)anEvent	 
 {
 	var point = [anEvent locationInWindow];
-	var figureUnderPoint = [[_tool drawing] figureAt: point];
-	figureUnderPoint = [_tool selectableFigure: figureUnderPoint];
+	var figureUnderPoint = [[_tool drawing] figureAt:point];
+	figureUnderPoint = [_tool selectableFigure:figureUnderPoint];
 
 	if (figureUnderPoint != nil && (figureUnderPoint != [_tool drawing]))
     {
-		[_tool select: figureUnderPoint];
-		[self transitionTo: [SelectedState tool: _tool initialDragPoint: point]];
+		[_tool select:figureUnderPoint];
+		[self transitionTo:[SelectedState tool:_tool initialDragPoint:point]];
 	}
     else
     {
 		[_tool clearSelection];
-		[self transitionTo: [MarqueeSelectionState tool: _tool initialDragPoint: point]];
+		[self transitionTo:[MarqueeSelectionState tool:_tool initialDragPoint:point]];
 	}
 }
 @end

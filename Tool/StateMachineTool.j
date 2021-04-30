@@ -15,7 +15,7 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation StateMachineTool :Tool
+@implementation StateMachineTool : Tool
 {
 	ToolState _state;
 }
